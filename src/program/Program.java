@@ -11,7 +11,6 @@ public class Program {
         int n = scanner.nextInt();
         int[] massive = new int[n];
         ArrayUtil.fillFromScanner(massive, scanner);
-        System.out.println(ArrayUtil.unique(massive));
 
 
         /*int n = scanner.nextInt();

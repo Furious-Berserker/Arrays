@@ -1,9 +1,8 @@
 package arrays;
 
+import javax.management.ObjectName;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -361,7 +360,7 @@ public class ArrayUtil {
 
     public static int generateRandom(){
         Random random = new Random();
-        int n = random.nextInt(100) + 1;
+        int n = random.nextInt(1000) + 1;
         return n;
     }
 
@@ -394,15 +393,20 @@ public class ArrayUtil {
 
         int tmp = 0;
         int min = Integer.MAX_VALUE;
-        int d = 0;
 
         for (int i = 0; i < mas.length; i++){
             tmp = Math.abs(mas[i] - x);
-            if (tmp <= min) {
+            if (tmp < min) {
                 min = tmp;
             }
         }
-        return mas[d];
+        for (int i = 0; i < mas.length; i++){
+            tmp = Math.abs(mas[i] - x);
+            if (tmp == min){
+                return mas[i];
+            }
+        }
+        return 0;
     }
 
     public static ArrayList<Integer> nearest2(int[] mas, int x){
@@ -618,6 +622,204 @@ public class ArrayUtil {
     }
 
     public static int[] unique2(int[] mas){
-        return null;
+
+        int c;
+        int count;
+        int masLength = 0;
+
+        for (int i = 0; i < mas.length; i++){
+            count = 0;
+            c = mas[i];
+            for (int j = 0; j < mas.length; j++) {
+                if (c == mas[j]) {
+                    count++;
+                }
+            }
+            if (count == 1){
+                masLength++;
+            }
+        }
+
+        int[] newMas = new int[masLength];
+        int k = 0;
+
+        for (int i = 0; i < mas.length; i++){
+            count = 0;
+            c = mas[i];
+
+            for (int j = 0; j < mas.length; j++) {
+                if (c == mas[j]){
+                    count++;
+                }
+            }
+            if (count == 1) {
+                newMas[k] = c;
+                k++;
+            }
+        }
+        return newMas;
     }
+
+    public static int frequent(int[] massive){
+
+        int c = 0;
+        int max = 0;
+        int d = 0;
+
+        for (int i = 0; i < massive.length; i++){
+            int count = 0;
+            c = massive[i];
+            for (int j = 0; j < massive.length; j++) {
+                if (c == massive[j])
+                    count++;
+            }
+            if (count > max) {
+                max = c;
+                d++;
+            }
+        }
+        if (d > 1)
+            return max;
+        else
+            return 0;
+    }
+
+    public static ArrayList<Integer> frequent2(int[] massive){
+
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        int c = 0;
+        int max = 0;
+
+        for (int i = 0; i < massive.length; i++){
+            int d = 0;
+            c = massive[i];
+            for (int j = 0; j < massive.length; j++) {
+                if (c == massive[j]){
+                    d++;
+                }
+            }
+            if (c != max && d > 1 && !arrayList.contains(c)){
+                max = c;
+                arrayList.add(max);
+            }
+        }
+        return arrayList;
+    }
+
+    public static int[] frequent3(int[] massive){
+
+        int c = 0;
+        int max = 0;
+        int gCount = 0;
+
+        for (int i = 0; i < massive.length; i++){
+
+            int d = 0;
+            c = massive[i];
+
+            for (int j = 0; j < massive.length; j++) {
+                if (c == massive[j]){
+                    d++;
+                }
+            }
+            if (c != max && d > 1){
+                max = c;
+                gCount++;
+            }
+        }
+
+        int[] newMassive = new int[gCount];
+
+        int f = 0;
+        max = 0;
+
+        for (int i = 0; i < massive.length; i++){
+
+            int d = 0;
+            c = massive[i];
+
+            for (int j = 0; j < massive.length; j++) {
+                if (c == massive[j]){
+                    d++;
+                }
+            }
+
+            if (c != max && d > 1){
+                max = c;
+                newMassive[f] = max;
+                f++;
+            }
+        }
+
+        return newMassive;
+    }
+
+    public static ArrayList<Integer> equalItems(int[] mas){
+
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        int c = 0;
+
+        for (int i = 0; i < mas.length; i++){
+            int count = 0;
+            c = mas[i];
+            for (int j = 0; j < mas.length; j++) {
+                if (mas[j] == c)
+                    count++;
+            }
+            if (count > 1)
+                arrayList.add(c);
+        }
+        return arrayList;
+    }
+
+    public static int[] equalItems2(int[] mas){
+
+        int c = countEqualPairs(mas);
+        int f = 0;
+        int d = 0;
+
+        int[] newMas = new int[c];
+
+        for (int i = 0; i < mas.length; i++) {
+            int count = 0;
+            f = mas[i];
+            for (int j = 0; j < mas.length; j++) {
+                if (mas[j] == f)
+                    count++;
+            }
+            if (count > 1) {
+                newMas[d] = c;
+                d++;
+            }
+        }
+        return newMas;
+    }
+
+    public static int[] sort(int[] mas){
+        Arrays.sort(mas);
+        return mas;
+    }
+
+    public static void sortComparator(Integer[] mas){
+        //Comparator<Integer> reverseOrderComparator = Collections.reverseOrder(new MyComparator());
+        Arrays.sort(mas, new MyComparator());
+        System.out.println(Arrays.toString(mas));
+    }
+
+    public static boolean isOrder(int[] mas){
+        boolean isOrder = false;
+        for (int i = 0; i < mas.length; i++) {
+            if (i < mas.length-1) {
+                if (mas[i] < mas[i + 1])
+                    isOrder = true;
+                else
+                    isOrder = false;
+            }
+        }
+        return isOrder;
+    }
+
+    public static void nearest(){}
 }
